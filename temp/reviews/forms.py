@@ -10,14 +10,41 @@ from .models import Review
 #     rating = forms.IntegerField(label="Your Rating", min_value=1, max_value=5)
 
 class ReviewForm(forms.ModelForm):
+ 
     class Meta:
+        
+       
         model = Review
-        fields = '__all__'
+        fields = ('user_name','email','number','sessions','allergies',)
+        allergies1 = [
+        ('Dairy', 'Dairy'),
+        ('Peanuts', 'Peanuts'),
+        ('air', 'air'),
+        ]
+        Sessions1= {
+            ('swimming', 'Swimming'),
+            ('biking', 'biking'),
+            ('racing', 'Racing'),
+            ('meeting', 'Meeting'),
+        }
+        sessions = forms.ChoiceField(
+            choices=Sessions1,
+            widget=forms.ChoiceField()
+        )
+        allergies = forms.MultipleChoiceField( 
+            choices=allergies1,
+            widget=forms.CheckboxSelectMultiple()
+        )
+       
         labels = {
             "user_name": "User Name",
-            "feedback": "Your Feedback",
-            "email": "Email"
+            "email": "Email",
+            "number" : "Phone Number",
+            "sessions" : "Event options",
+            "allergies" : "allergies"
+            
         }
+    
         error_messages = {
             "user_name": {
                 "required": "Your name must not be empty!",
@@ -30,3 +57,5 @@ class ReviewForm(forms.ModelForm):
                 "required": "Please give us some feedback"
             }
         }
+       
+        
